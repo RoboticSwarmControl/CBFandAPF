@@ -29,8 +29,6 @@ function Path = computeTrajectoryAPF(S, G, O, rho0, dT, Katt, Krep, MaxTime, Ndi
         O.R(1) = 0.5;
         O.C(2,:) = [2.5,3];
         O.R(2) = 0.5;
-        v0 = [];
-        alpha = 0.5;
         dT = 0.001;
         Katt = 1;
         MaxTime = 10000;
@@ -55,6 +53,8 @@ function Path = computeTrajectoryAPF(S, G, O, rho0, dT, Katt, Krep, MaxTime, Ndi
     prog = 0;
     fprintf(1,'Computation Progress: %3d%%\n',prog);
     rho = zeros(1,numel(O.R));
+    v = zeros(MaxTime,Ndim);
+    
     while(continueFlag && ~timeupFlag)
         gradUatt = Katt * (Path(t,:) - G);
     
@@ -92,29 +92,9 @@ function Path = computeTrajectoryAPF(S, G, O, rho0, dT, Katt, Krep, MaxTime, Ndi
     fprintf(1,'\b\b\b\b%3.0f%%',100); pause(0.1); % Deleting 4 characters (The three digits and the % symbol)
     fprintf('\n'); % To go to a new line after reaching 100% progress
     if(timeupFlag && continueFlag)
-        fprintf(1,strcat("Simulation did not converge after", num2str(MaxTime), "steps\n"))
+        fprintf(1,strcat("Simulation did not converge after ", num2str(MaxTime), " steps\n"))
     elseif(~timeupFlag && ~continueFlag)
         fprintf(1,strcat("Simulation for rho0 = ", num2str(rho0)," successfully converged within precision\n"))
     end
     
 end
-
-% 
-% function computeTrajectoryAPF()
-% 
-% while(true)
-% 
-%     dR = dT * v;
-%     t = t + 1;
-%     P(t,:) = P(t-1,:) + dR;
-% 
-%     %set(hPos,"XData",P(t,1),"YData",P(t,2));
-%     hTraj(t) = plot([P(t-1,1),P(t,1)], [P(t-1,2),P(t,2)]);
-% 
-%     drawnow limitrate
-%     if(norm(P(t,:) - G)<0.1)
-%         break
-%     end
-% end
-% 
-% end

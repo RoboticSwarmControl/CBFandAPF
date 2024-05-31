@@ -128,7 +128,7 @@ function Path = computeTrajectoryCBF(S, G, O, v0, alpha, dT, Katt, MaxTime, Ndim
     fprintf(1,'\b\b\b\b%3.0f%%',100); pause(0.1); % Deleting 4 characters (The three digits and the % symbol)
     fprintf('\n'); % To go to a new line after reaching 100% progress
     if(timeupFlag && continueFlag)
-        fprintf(1,strcat("Simulation did not converge after", num2str(MaxTime), "steps\n"))
+        fprintf(1,strcat("Simulation did not converge after ", num2str(MaxTime), " steps\n"))
     elseif(~timeupFlag && ~continueFlag)
         fprintf(1,strcat("Simulation for alpha = ", num2str(alpha)," successfully converged within precision\n"))
     end
